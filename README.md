@@ -13,19 +13,24 @@ Aplicação web para postagem de séries com:
 
 - Python 3.10+
 
-## Instalação
+## Método para baixar dependências
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+./scripts/install_deps.sh
 ```
 
-## Executar
+Esse comando:
+- cria `.venv` (se não existir)
+- ativa o ambiente virtual
+- instala os pacotes do `requirements.txt`
+
+## Método para iniciar
 
 ```bash
-python app.py
+./scripts/start.sh
 ```
+
+Esse comando ativa `.venv` e inicia a aplicação Flask.
 
 Acesse: `http://127.0.0.1:5000`
 
