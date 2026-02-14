@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Painel de Doações{% endblock %}
+{% block content %}
+<section class="card form-wrap">
+  <h2>Painel de Doações</h2>
+  <form method="post" class="form inline">
+    <input name="name" placeholder="Nome (Pix, Mercado Pago)" required>
+    <input name="key" placeholder="Chave / Token" required>
+    <button type="submit">Adicionar</button>
+  </form>
+</section>
+
+<section class="grid two">
+{% for m in methods %}
+  <article class="card">
+    <h3>{{ m.name }}</h3>
+    <p>{{ m.payment_key }}</p>
+    <p class="muted">Status: {{ 'Ativo' if m.is_active else 'Desativado' }}</p>
+    <a href="{{ url_for('toggle_donation', method_id=m.id) }}">Alternar status</a>
+  </article>
+{% else %}
+  <p class="muted">Sem métodos cadastrados.</p>
+{% endfor %}
+</section>
+{% endblock %}

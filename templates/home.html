@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Home | GameNew{% endblock %}
+{% block content %}
+<section class="card">
+  <form method="get" action="{{ url_for('home') }}" class="search-row">
+    <input type="text" name="q" value="{{ q }}" placeholder="Buscar séries...">
+    <button type="submit">Buscar</button>
+  </form>
+</section>
+
+<section class="card">
+  <h3>💖 Métodos de Doação</h3>
+  {% if donation_methods %}
+    <ul>
+    {% for d in donation_methods %}
+      <li><strong>{{ d.name }}:</strong> {{ d.payment_key }}</li>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p class="muted">Nenhum método ativo.</p>
+  {% endif %}
+</section>
+
+<section class="grid three">
+{% for s in series %}
+  <article class="card">
+    {% if s.cover_url %}<img src="{{ s.cover_url }}" class="cover" alt="{{ s.title }}">{% endif %}
+    <h3>{{ s.title }}</h3>
+    <p>{{ s.description[:140] }}{% if s.description and s.description|length > 140 %}...{% endif %}</p>
+    <p class="muted">👁 {{ s.views }} views</p>
+    <a href="{{ url_for('serie_detail', series_id=s.id) }}">Abrir</a>
+  </article>
+{% else %}
+  <p class="muted">Nenhuma série cadastrada.</p>
+{% endfor %}
+</section>
+{% endblock %}

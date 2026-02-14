@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Gerenciar Séries{% endblock %}
+{% block content %}
+<section class="card admin-head">
+  <h2>Gerenciar Séries</h2>
+  <a class="btn-link" href="{{ url_for('admin_add_series') }}">+ Adicionar Série</a>
+</section>
+
+<section class="grid two">
+{% for r in rows %}
+  <article class="card">
+    {% if r.cover_url %}<img src="{{ r.cover_url }}" class="cover" alt="{{ r.title }}">{% endif %}
+    <h3>{{ r.title }}</h3>
+    <p>{{ r.description[:140] }}{% if r.description and r.description|length > 140 %}...{% endif %}</p>
+    <p class="muted">Views: {{ r.views }}</p>
+    <div class="actions">
+      <a href="{{ url_for('serie_detail', series_id=r.id) }}">Abrir</a>
+      <a href="{{ url_for('admin_edit_series', series_id=r.id) }}">Editar</a>
+      <form method="post" action="{{ url_for('admin_delete_series', series_id=r.id) }}" onsubmit="return confirm('Excluir série?')">
+        <button type="submit" class="danger">Apagar</button>
+      </form>
+    </div>
+  </article>
+{% else %}
+  <p class="muted">Nenhuma série cadastrada.</p>
+{% endfor %}
+</section>
+{% endblock %}

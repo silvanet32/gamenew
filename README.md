@@ -1,17 +1,35 @@
-# GameNew Séries
+# GameNew Séries (Flask)
 
-Site simples para postagem de séries com:
+Aplicação web para postagem de séries com:
 
-- Sistema de login e cadastro
+- Login e cadastro de usuários
 - Conta admin padrão
-- Painel admin para criar, editar e excluir séries
-- Configuração de método de doação
+- Painel admin para adicionar, editar e apagar séries
+- Painel de métodos de doação (ativar/desativar)
+- Curtidas, comentários e contagem de visualizações por usuário
+- Banco SQLite local
 
-## Como usar
+## Requisitos
 
-1. Abra o arquivo `index.html` no navegador.
-2. Faça login com:
-   - **E-mail:** `admin@gamenew.com`
-   - **Senha:** `admin123`
+- Python 3.10+
 
-> Os dados ficam salvos no `localStorage` do navegador.
+## Instalação
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+## Executar
+
+```bash
+python app.py
+```
+
+Acesse: `http://127.0.0.1:5000`
+
+## Admin padrão
+
+- **Email:** `admin@gmail.com`
+- **Senha:** `admin123`

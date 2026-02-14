@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Adicionar Série{% endblock %}
+{% block content %}
+<section class="card form-wrap">
+  <h2>Adicionar Série</h2>
+  <form method="post" class="form">
+    <input type="text" name="title" placeholder="Título" required>
+    <textarea name="description" rows="5" placeholder="Descrição"></textarea>
+    <input type="url" name="cover_url" placeholder="URL da capa">
+    <input type="url" name="external_link" placeholder="Link externo (opcional)">
+    <input type="url" name="video_url" placeholder="Link de vídeo (YouTube/Drive/MP4)">
+    <button type="submit">Salvar</button>
+  </form>
+</section>
+{% endblock %}
