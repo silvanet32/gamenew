@@ -1,23 +1,52 @@
 {% extends 'base.html' %}
-{% block title %}Login | GameNew{% endblock %}
+{% block title %}Autenticação | GameNew{% endblock %}
 {% block content %}
-<section class="grid two">
-  <form class="card form" method="post">
-    <h2>Entrar</h2>
-    <input type="hidden" name="action" value="login">
-    <input type="email" name="email" placeholder="E-mail" required>
-    <input type="password" name="password" placeholder="Senha" required>
-    <button type="submit">Login</button>
-    <p class="muted">Admin padrão: admin@gmail.com / admin123</p>
-  </form>
+<section class="auth-switch card">
+  <div class="auth-tabs">
+    <button type="button" class="auth-tab active" data-target="login-panel">Entrar</button>
+    <button type="button" class="auth-tab" data-target="register-panel">Registrar</button>
+  </div>
 
-  <form class="card form" method="post">
-    <h2>Cadastrar</h2>
-    <input type="hidden" name="action" value="register">
-    <input type="text" name="username" placeholder="Usuário" required>
-    <input type="email" name="email" placeholder="E-mail" required>
-    <input type="password" name="password" placeholder="Senha" required>
-    <button type="submit">Criar conta</button>
-  </form>
+  <div id="login-panel" class="auth-panel active">
+    <form class="form" method="post">
+      <h2>Entrar na conta</h2>
+      <input type="hidden" name="action" value="login">
+      <input type="email" name="email" placeholder="E-mail" required>
+      <input type="password" name="password" placeholder="Senha" required>
+      <button type="submit">Entrar</button>
+      <p class="muted">Admin padrão: admin@gmail.com / admin123</p>
+      <p class="muted">Não tem conta? <button type="button" class="link-btn" data-target="register-panel">Registrar</button></p>
+    </form>
+  </div>
+
+  <div id="register-panel" class="auth-panel">
+    <form class="form" method="post">
+      <h2>Criar conta</h2>
+      <input type="hidden" name="action" value="register">
+      <input type="text" name="username" placeholder="Usuário" required>
+      <input type="email" name="email" placeholder="E-mail" required>
+      <input type="password" name="password" placeholder="Senha" required>
+      <button type="submit">Cadastrar</button>
+      <p class="muted">Já possui conta? <button type="button" class="link-btn" data-target="login-panel">Fazer login</button></p>
+    </form>
+  </div>
 </section>
+
+<script>
+(() => {
+  const tabs = document.querySelectorAll('.auth-tab, .link-btn');
+  const panels = document.querySelectorAll('.auth-panel');
+
+  function activate(targetId) {
+    panels.forEach((panel) => panel.classList.toggle('active', panel.id === targetId));
+    document.querySelectorAll('.auth-tab').forEach((tab) => {
+      tab.classList.toggle('active', tab.dataset.target === targetId);
+    });
+  }
+
+  tabs.forEach((el) => {
+    el.addEventListener('click', () => activate(el.dataset.target));
+  });
+})();
+</script>
 {% endblock %}

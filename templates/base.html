@@ -11,13 +11,13 @@
     <h1 class="brand">GameNew Séries</h1>
     <nav class="stream-nav">
       {% if current_user.id %}
-        <a href="{{ url_for('home') }}" class="active">Home</a>
-        <a href="{{ url_for('home', q='trending') }}">Trending</a>
-        <a href="{{ url_for('home', q='fantasia') }}">Genres</a>
-        <a href="{{ url_for('home') }}">My List</a>
+        <a href="{{ url_for('home') }}" class="active">Início</a>
+        <a href="{{ url_for('home', q='em alta') }}">Em alta</a>
+        <a href="{{ url_for('home', q='gênero') }}">Gêneros</a>
+        <a href="{{ url_for('home') }}">Minha lista</a>
         {% if current_user.is_admin %}
           <a href="{{ url_for('admin_manage') }}">Gerenciar</a>
-          <a href="{{ url_for('admin_add_series') }}">Adicionar Série</a>
+          <a href="{{ url_for('admin_add_series') }}">Adicionar série</a>
         {% endif %}
         <a href="{{ url_for('logout') }}">Sair</a>
       {% endif %}
@@ -27,7 +27,7 @@
   <main class="container stream-container">
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
-        <div class="flash-wrap">
+        <div class="flash-wrap" id="flashWrap">
           {% for category, message in messages %}
             <div class="flash {{ category }}">{{ message }}</div>
           {% endfor %}
@@ -36,5 +36,14 @@
     {% endwith %}
     {% block content %}{% endblock %}
   </main>
+
+  <script>
+    setTimeout(() => {
+      const wrap = document.getElementById('flashWrap');
+      if (!wrap) return;
+      wrap.classList.add('flash-out');
+      setTimeout(() => wrap.remove(), 350);
+    }, 3000);
+  </script>
 </body>
 </html>
