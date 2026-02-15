@@ -7,22 +7,24 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <header class="topbar">
-    <h1>🎬 GameNew Séries</h1>
-    <nav>
+  <header class="topbar stream-topbar">
+    <h1 class="brand">GameNew Séries</h1>
+    <nav class="stream-nav">
       {% if current_user.id %}
-        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('home') }}" class="active">Home</a>
+        <a href="{{ url_for('home', q='trending') }}">Trending</a>
+        <a href="{{ url_for('home', q='fantasia') }}">Genres</a>
+        <a href="{{ url_for('home') }}">My List</a>
         {% if current_user.is_admin %}
           <a href="{{ url_for('admin_manage') }}">Gerenciar</a>
-          <a href="{{ url_for('admin_donation_panel') }}">Doações</a>
-          <a href="{{ url_for('admin_stats') }}">Stats</a>
+          <a href="{{ url_for('admin_add_series') }}">Adicionar Série</a>
         {% endif %}
-        <a href="{{ url_for('logout') }}">Sair ({{ current_user.username }})</a>
+        <a href="{{ url_for('logout') }}">Sair</a>
       {% endif %}
     </nav>
   </header>
 
-  <main class="container">
+  <main class="container stream-container">
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         <div class="flash-wrap">

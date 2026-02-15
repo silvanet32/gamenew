@@ -1,37 +1,67 @@
 {% extends 'base.html' %}
 {% block title %}Home | GameNew{% endblock %}
 {% block content %}
-<section class="card">
+<section class="hero-banner">
+  <div class="hero-overlay">
+    <p class="hero-kicker">MINI SERIES</p>
+    <h2>Short Stories, Big Thrills</h2>
+    <p>Publique e gerencie novas séries com visual cinematográfico.</p>
+  </div>
+</section>
+
+<section class="card stream-search-card">
   <form method="get" action="{{ url_for('home') }}" class="search-row">
-    <input type="text" name="q" value="{{ q }}" placeholder="Buscar séries...">
-    <button type="submit">Buscar</button>
+    <input type="text" name="q" value="{{ q }}" placeholder="Search séries, genres, episódios...">
+    <button type="submit">Search</button>
   </form>
 </section>
 
-<section class="card">
-  <h3>💖 Métodos de Doação</h3>
+<section class="section-title-row">
+  <h3>Trending Mini-Series</h3>
+  <a href="{{ url_for('home') }}">See All</a>
+</section>
+<section class="poster-row">
+{% for s in series %}
+  <article class="poster-card">
+    {% if s.cover_url %}
+      <img src="{{ s.cover_url }}" class="cover" alt="{{ s.title }}">
+    {% else %}
+      <div class="cover cover-fallback">{{ s.title[:1] }}</div>
+    {% endif %}
+    <div class="poster-caption">
+      <h4>{{ s.title }}</h4>
+      <small>👁 {{ s.views }} views</small>
+    </div>
+    <a class="poster-link" href="{{ url_for('serie_detail', series_id=s.id) }}">Abrir</a>
+  </article>
+{% else %}
+  <p class="muted">Nenhuma série cadastrada ainda.</p>
+{% endfor %}
+</section>
+
+<section class="section-title-row">
+  <h3>Popular Genres</h3>
+</section>
+<section class="genre-row">
+  <span class="genre-chip">Sci-Fi</span>
+  <span class="genre-chip">Thriller</span>
+  <span class="genre-chip">Fantasy</span>
+  <span class="genre-chip">Drama</span>
+</section>
+
+<section class="section-title-row">
+  <h3>Métodos de Doação</h3>
+</section>
+<section class="donation-grid">
   {% if donation_methods %}
-    <ul>
     {% for d in donation_methods %}
-      <li><strong>{{ d.name }}:</strong> {{ d.payment_key }}</li>
+      <article class="card donation-item">
+        <h4>{{ d.name }}</h4>
+        <p>{{ d.payment_key }}</p>
+      </article>
     {% endfor %}
-    </ul>
   {% else %}
     <p class="muted">Nenhum método ativo.</p>
   {% endif %}
-</section>
-
-<section class="grid three">
-{% for s in series %}
-  <article class="card">
-    {% if s.cover_url %}<img src="{{ s.cover_url }}" class="cover" alt="{{ s.title }}">{% endif %}
-    <h3>{{ s.title }}</h3>
-    <p>{{ s.description[:140] }}{% if s.description and s.description|length > 140 %}...{% endif %}</p>
-    <p class="muted">👁 {{ s.views }} views</p>
-    <a href="{{ url_for('serie_detail', series_id=s.id) }}">Abrir</a>
-  </article>
-{% else %}
-  <p class="muted">Nenhuma série cadastrada.</p>
-{% endfor %}
 </section>
 {% endblock %}
