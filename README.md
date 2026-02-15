@@ -16,6 +16,20 @@ Projeto com backend Flask e nova interface React + Vite (estilo React-bites).
 - Python 3.10+
 - Node.js 18+
 
+## Método fácil no Windows (.bat)
+
+Para instalar dependências e iniciar backend + frontend automaticamente:
+
+```bat
+run_site.bat
+```
+
+O script faz tudo:
+- cria/ativa `.venv`
+- instala dependências Python (`requirements.txt`)
+- instala dependências do frontend (`npm install`)
+- inicia Flask e Vite em janelas separadas
+
 ## Método para baixar dependências
 
 ```bash
