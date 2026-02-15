@@ -1,60 +1,59 @@
 # GameNew Séries (Flask + React/Vite)
 
-Projeto com backend Flask e nova interface React + Vite (estilo React-bites).
-
-## Funcionalidades
-
-- Login e cadastro de usuários (backend Flask)
-- Conta admin padrão
-- Painel admin para adicionar, editar e apagar séries
-- Painel de métodos de doação (ativar/desativar)
-- Curtidas, comentários e contagem de visualizações por usuário
-- Interface moderna em React + Vite na pasta `frontend/`
+Projeto com backend Flask e interface React + Vite.
 
 ## Requisitos
 
 - Python 3.10+
 - Node.js 18+
 
-## Método fácil no Windows (.bat)
+## Windows (sem trabalho manual)
 
-Para instalar dependências e iniciar backend + frontend automaticamente:
+Use estes arquivos `.bat` na raiz do projeto:
 
-```bat
-run_site.bat
-```
+1. **Instalar dependências**
+   ```bat
+   install_deps.bat
+   ```
+2. **Iniciar o site** (backend + frontend em janelas separadas)
+   ```bat
+   start_site.bat
+   ```
+3. **Tudo em um comando**
+   ```bat
+   run_site.bat
+   ```
 
-O script faz tudo:
-- cria/ativa `.venv`
-- instala dependências Python (`requirements.txt`)
-- instala dependências do frontend (`npm install`)
-- inicia Flask e Vite em janelas separadas
+### O que foi corrigido
 
-## Método para baixar dependências
+- O instalador agora usa `python -m pip` (mais estável no Windows).
+- O script de instalação não fecha sem mostrar mensagem final (`pause`).
+- O start abre backend e frontend em janelas separadas com `cmd /k`, então se der erro a janela fica aberta para você ver.
+
+## Linux/macOS
+
+### Instalar dependências
 
 ```bash
 ./scripts/install_deps.sh
 ```
 
-Esse comando instala:
-- backend (`requirements.txt` com `.venv`)
-- frontend (`frontend/package.json`)
-
-## Método para iniciar o backend (Flask)
+### Iniciar backend
 
 ```bash
 ./scripts/start.sh
 ```
 
-Acesse: `http://127.0.0.1:5000`
-
-## Método para iniciar a interface React + Vite
+### Iniciar frontend
 
 ```bash
 ./scripts/start_frontend.sh
 ```
 
-Acesse: `http://127.0.0.1:5173`
+## Endereços
+
+- Backend: `http://127.0.0.1:5000`
+- Frontend: `http://127.0.0.1:5173`
 
 ## Admin padrão
 
