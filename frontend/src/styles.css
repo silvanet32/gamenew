@@ -1,0 +1,92 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  color: #e2e8f0;
+  background: radial-gradient(circle at top right, #1e3a8a, #020617 55%);
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; }
+
+.page { max-width: 1100px; margin: 0 auto; padding: 2rem 1rem 3rem; }
+.hero { margin-bottom: 1.2rem; }
+.hero h1 { margin: .2rem 0; }
+.tag { color: #67e8f9; font-size: .9rem; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1rem; }
+
+.rb-glass-card {
+  background: rgba(15, 23, 42, .75);
+  border: 1px solid rgba(148, 163, 184, .3);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  padding: 1rem;
+}
+
+.rb-glass-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: .7rem;
+  margin-bottom: .8rem;
+}
+
+.rb-glass-card__header h3 { margin: 0; font-size: 1rem; }
+
+.form, .auth-grid { display: grid; gap: .6rem; }
+input, textarea {
+  width: 100%;
+  border: 1px solid #334155;
+  background: #0f172a;
+  border-radius: 12px;
+  color: #f8fafc;
+  padding: .7rem .8rem;
+}
+
+textarea { min-height: 90px; resize: vertical; }
+
+.rb-neon-btn {
+  border: none;
+  border-radius: 999px;
+  padding: .6rem 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.rb-neon-btn--primary { background: #22d3ee; color: #082f49; }
+.rb-neon-btn--secondary { background: #a78bfa; color: #2e1065; }
+.rb-neon-btn--danger { background: #fb7185; color: #4c0519; }
+
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem; }
+.stats div {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: .7rem;
+  text-align: center;
+}
+.stats strong { display: block; font-size: 1.2rem; }
+.stats span { color: #94a3b8; font-size: .85rem; }
+
+.list { display: grid; gap: .6rem; }
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: .7rem;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: .75rem;
+  background: #0f172a;
+}
+.list-item h4 { margin: 0 0 .2rem; }
+.list-item p { margin: 0 0 .2rem; color: #94a3b8; }
+
+.rb-actions { display: flex; gap: .5rem; align-items: center; }
+.rb-pill {
+  border-radius: 999px;
+  font-size: .8rem;
+  padding: .3rem .6rem;
+  font-weight: 700;
+}
+.rb-pill--active { background: #064e3b; color: #6ee7b7; }
+.rb-pill--inactive { background: #3f1d2e; color: #fda4af; }

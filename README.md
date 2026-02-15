@@ -1,17 +1,20 @@
-# GameNew Séries (Flask)
+# GameNew Séries (Flask + React/Vite)
 
-Aplicação web para postagem de séries com:
+Projeto com backend Flask e nova interface React + Vite (estilo React-bites).
 
-- Login e cadastro de usuários
+## Funcionalidades
+
+- Login e cadastro de usuários (backend Flask)
 - Conta admin padrão
 - Painel admin para adicionar, editar e apagar séries
 - Painel de métodos de doação (ativar/desativar)
 - Curtidas, comentários e contagem de visualizações por usuário
-- Banco SQLite local
+- Interface moderna em React + Vite na pasta `frontend/`
 
 ## Requisitos
 
 - Python 3.10+
+- Node.js 18+
 
 ## Método para baixar dependências
 
@@ -19,20 +22,25 @@ Aplicação web para postagem de séries com:
 ./scripts/install_deps.sh
 ```
 
-Esse comando:
-- cria `.venv` (se não existir)
-- ativa o ambiente virtual
-- instala os pacotes do `requirements.txt`
+Esse comando instala:
+- backend (`requirements.txt` com `.venv`)
+- frontend (`frontend/package.json`)
 
-## Método para iniciar
+## Método para iniciar o backend (Flask)
 
 ```bash
 ./scripts/start.sh
 ```
 
-Esse comando ativa `.venv` e inicia a aplicação Flask.
-
 Acesse: `http://127.0.0.1:5000`
+
+## Método para iniciar a interface React + Vite
+
+```bash
+./scripts/start_frontend.sh
+```
+
+Acesse: `http://127.0.0.1:5173`
 
 ## Admin padrão
 

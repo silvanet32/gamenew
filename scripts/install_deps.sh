@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Backend (Flask)
 if [ ! -d ".venv" ]; then
   python -m venv .venv
 fi
@@ -10,4 +11,8 @@ source .venv/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
 
-echo "Dependências instaladas com sucesso."
+# Frontend (React + Vite)
+cd frontend
+npm install
+
+echo "Dependências backend/frontend instaladas com sucesso."
