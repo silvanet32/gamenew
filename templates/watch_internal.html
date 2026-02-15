@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Assistir | {{ title }}{% endblock %}
+{% block content %}
+<section class="card">
+  <h2>{{ title }}</h2>
+  <p class="muted">Player interno protegido.</p>
+
+  {% if embed_url %}
+    <div class="video-wrap">
+      <iframe
+        src="{{ embed_url }}"
+        class="video-frame"
+        allow="autoplay; fullscreen"
+        allowfullscreen
+        referrerpolicy="no-referrer"
+      ></iframe>
+    </div>
+  {% elif stream_url %}
+    <div class="video-wrap" oncontextmenu="return false;">
+      <video
+        class="video-frame"
+        controls
+        controlsList="nodownload noplaybackrate"
+        disablePictureInPicture
+        oncontextmenu="return false;"
+      >
+        <source src="{{ stream_url }}" type="video/mp4">
+        Seu navegador não suporta vídeo.
+      </video>
+    </div>
+  {% endif %}
+
+  <p><a href="{{ url_for('serie_detail', series_id=series_id) }}">← Voltar para série</a></p>
+</section>
+{% endblock %}

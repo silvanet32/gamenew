@@ -1,10 +1,13 @@
 import os
 import sqlite3
 from datetime import datetime
+
+import requests
 from functools import wraps
 
 from flask import (
     Flask,
+    Response,
     abort,
     flash,
     jsonify,
@@ -49,6 +52,32 @@ def create_app() -> Flask:
             return fn(*args, **kwargs)
 
         return wrapper
+
+
+    def detect_video_kind(url: str) -> str:
+        value = (url or "").strip().lower()
+        if not value:
+            return "none"
+        if "youtube.com/watch" in value or "youtu.be/" in value:
+            return "youtube"
+        if "drive.google.com/file/d/" in value:
+            return "drive"
+        if value.endswith('.mp4'):
+            return "mp4"
+        return "external"
+
+    def to_embed_url(url: str) -> str:
+        value = (url or "").strip()
+        if "youtube.com/watch" in value and "v=" in value:
+            video_id = value.split('v=')[1].split('&')[0]
+            return f"https://www.youtube.com/embed/{video_id}"
+        if "youtu.be/" in value:
+            video_id = value.split('youtu.be/')[1].split('?')[0]
+            return f"https://www.youtube.com/embed/{video_id}"
+        if "drive.google.com/file/d/" in value:
+            file_id = value.split('/file/d/')[1].split('/')[0]
+            return f"https://drive.google.com/file/d/{file_id}/preview"
+        return value
 
     @app.context_processor
     def inject_user():
@@ -195,6 +224,77 @@ def create_app() -> Flask:
         conn.close()
 
         return render_template("serie_detail.html", s=s, like_count=like_count, comments=comments)
+
+
+
+    @app.get("/assistir/<int:series_id>")
+    @login_required
+    def watch_internal(series_id: int):
+        conn = get_db()
+        s = conn.execute("SELECT id, title, video_url FROM series WHERE id=?", (series_id,)).fetchone()
+        conn.close()
+        if not s:
+            abort(404)
+
+        kind = detect_video_kind(s["video_url"] or "")
+        embed_url = None
+        stream_url = None
+
+        if kind in ("youtube", "drive"):
+            embed_url = to_embed_url(s["video_url"])
+        elif kind in ("mp4", "external"):
+            stream_url = url_for("stream_internal", series_id=series_id)
+
+        if not embed_url and not stream_url:
+            flash("Essa série não possui vídeo configurado.", "warning")
+            return redirect(url_for("serie_detail", series_id=series_id))
+
+        return render_template(
+            "watch_internal.html",
+            title=s["title"],
+            kind=kind,
+            embed_url=embed_url,
+            stream_url=stream_url,
+            series_id=series_id,
+        )
+
+
+    @app.get("/stream/<int:series_id>")
+    @login_required
+    def stream_internal(series_id: int):
+        conn = get_db()
+        s = conn.execute("SELECT video_url FROM series WHERE id=?", (series_id,)).fetchone()
+        conn.close()
+        if not s or not s["video_url"]:
+            return "Vídeo não encontrado.", 404
+
+        upstream = (s["video_url"] or "").strip()
+        headers = {}
+        if request.headers.get("Range"):
+            headers["Range"] = request.headers["Range"]
+
+        try:
+            resp = requests.get(upstream, stream=True, headers=headers, timeout=20)
+        except Exception:
+            return "Não foi possível carregar o vídeo.", 502
+
+        allowed_headers = {}
+        for key in ["Content-Type", "Content-Range", "Accept-Ranges", "Content-Length"]:
+            if key in resp.headers:
+                allowed_headers[key] = resp.headers[key]
+
+        allowed_headers["Cache-Control"] = "no-store"
+        allowed_headers["Pragma"] = "no-cache"
+        allowed_headers["Content-Disposition"] = "inline"
+        allowed_headers["X-Content-Type-Options"] = "nosniff"
+
+        def generate():
+            for chunk in resp.iter_content(chunk_size=1024 * 256):
+                if chunk:
+                    yield chunk
+
+        status = 206 if request.headers.get("Range") and resp.status_code in (200, 206) else resp.status_code
+        return Response(generate(), status=status, headers=allowed_headers)
 
     @app.post("/serie/<int:series_id>/like")
     @login_required
