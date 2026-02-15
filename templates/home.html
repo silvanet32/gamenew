@@ -5,19 +5,12 @@
   <div class="hero-overlay">
     <p class="hero-kicker">MINI SÉRIES</p>
     <h2>Histórias curtas, grandes emoções</h2>
-    <p>Publique e gerencie novas séries com visual cinematográfico.</p>
+    <p>Explore, adicione e organize suas séries em um visual estilo streaming.</p>
   </div>
 </section>
 
-<section class="card stream-search-card">
-  <form method="get" action="{{ url_for('home') }}" class="search-row">
-    <input type="text" name="q" value="{{ q }}" placeholder="Buscar séries, gêneros, episódios...">
-    <button type="submit">Buscar</button>
-  </form>
-</section>
-
 <section class="section-title-row">
-  <h3>Mini-séries em alta</h3>
+  <h3>Séries em destaque</h3>
   <a href="{{ url_for('home') }}">Ver tudo</a>
 </section>
 <section class="carousel-track">
@@ -47,6 +40,28 @@
   <span class="genre-chip">Suspense</span>
   <span class="genre-chip">Fantasia</span>
   <span class="genre-chip">Drama</span>
+</section>
+
+<section class="section-title-row">
+  <h3>Recomendado para você</h3>
+  <a href="{{ url_for('home') }}">Ver mais</a>
+</section>
+<section class="carousel-track">
+{% for s in series %}
+  <article class="poster-card">
+    {% if s.cover_url %}
+      <img src="{{ s.cover_url }}" class="cover" alt="{{ s.title }}">
+    {% else %}
+      <div class="cover cover-fallback">{{ s.title[:1] }}</div>
+    {% endif %}
+    <div class="poster-caption">
+      <h4>{{ s.title }}</h4>
+    </div>
+    <a class="poster-link" href="{{ url_for('serie_detail', series_id=s.id) }}">Abrir</a>
+  </article>
+{% else %}
+  <p class="muted">Adicione séries para preencher esta seção.</p>
+{% endfor %}
 </section>
 
 <section class="section-title-row">

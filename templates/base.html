@@ -12,9 +12,6 @@
     <nav class="stream-nav">
       {% if current_user.id %}
         <a href="{{ url_for('home') }}" class="active">Início</a>
-        <a href="{{ url_for('home', q='em alta') }}">Em alta</a>
-        <a href="{{ url_for('home', q='gênero') }}">Gêneros</a>
-        <a href="{{ url_for('home') }}">Minha lista</a>
         {% if current_user.is_admin %}
           <a href="{{ url_for('admin_manage') }}">Gerenciar</a>
           <a href="{{ url_for('admin_add_series') }}">Adicionar série</a>

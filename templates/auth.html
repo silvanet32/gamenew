@@ -1,51 +1,49 @@
 {% extends 'base.html' %}
 {% block title %}Autenticação | GameNew{% endblock %}
 {% block content %}
-<section class="auth-switch card">
-  <div class="auth-tabs">
-    <button type="button" class="auth-tab active" data-target="login-panel">Entrar</button>
-    <button type="button" class="auth-tab" data-target="register-panel">Registrar</button>
-  </div>
-
-  <div id="login-panel" class="auth-panel active">
-    <form class="form" method="post">
-      <h2>Entrar na conta</h2>
+<section class="auth-cinematic-grid">
+  <article class="auth-cinematic-card">
+    <div class="auth-cinematic-hero">
+      <h2>MINI SÉRIES</h2>
+      <p>Entrar na sua conta</p>
+    </div>
+    <form class="form auth-form" method="post">
       <input type="hidden" name="action" value="login">
       <input type="email" name="email" placeholder="E-mail" required>
       <input type="password" name="password" placeholder="Senha" required>
-      <button type="submit">Entrar</button>
+      <button type="submit" class="btn-red">Entrar</button>
+      <p class="muted">Não tem conta? <button type="button" class="link-btn" data-target="register">Registrar</button></p>
       <p class="muted">Admin padrão: admin@gmail.com / admin123</p>
-      <p class="muted">Não tem conta? <button type="button" class="link-btn" data-target="register-panel">Registrar</button></p>
     </form>
-  </div>
+  </article>
 
-  <div id="register-panel" class="auth-panel">
-    <form class="form" method="post">
-      <h2>Criar conta</h2>
+  <article class="auth-cinematic-card" id="registerBox">
+    <div class="auth-cinematic-hero">
+      <h2>MINI SÉRIES</h2>
+      <p>Criar sua conta</p>
+    </div>
+    <form class="form auth-form" method="post">
       <input type="hidden" name="action" value="register">
       <input type="text" name="username" placeholder="Usuário" required>
       <input type="email" name="email" placeholder="E-mail" required>
       <input type="password" name="password" placeholder="Senha" required>
-      <button type="submit">Cadastrar</button>
-      <p class="muted">Já possui conta? <button type="button" class="link-btn" data-target="login-panel">Fazer login</button></p>
+      <button type="submit" class="btn-red">Cadastrar</button>
+      <p class="muted">Já tem conta? <button type="button" class="link-btn" data-target="login">Fazer login</button></p>
     </form>
-  </div>
+  </article>
 </section>
 
 <script>
 (() => {
-  const tabs = document.querySelectorAll('.auth-tab, .link-btn');
-  const panels = document.querySelectorAll('.auth-panel');
-
-  function activate(targetId) {
-    panels.forEach((panel) => panel.classList.toggle('active', panel.id === targetId));
-    document.querySelectorAll('.auth-tab').forEach((tab) => {
-      tab.classList.toggle('active', tab.dataset.target === targetId);
+  const registerBox = document.getElementById('registerBox');
+  document.querySelectorAll('.link-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      if (btn.dataset.target === 'register') {
+        registerBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     });
-  }
-
-  tabs.forEach((el) => {
-    el.addEventListener('click', () => activate(el.dataset.target));
   });
 })();
 </script>
