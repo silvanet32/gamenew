@@ -1,59 +1,58 @@
-# GameNew Séries (Flask + React/Vite)
+# GameNew Séries (Flask + Frontend Integrado)
 
-Projeto com backend Flask e interface React + Vite.
+Agora backend e frontend podem rodar na **mesma página/URL** via Flask.
+
+## URL única
+
+- `http://127.0.0.1:5000/app`
+
+> O frontend é servido pelo próprio Flask a partir de `frontend/dist`.
 
 ## Requisitos
 
 - Python 3.10+
 - Node.js 18+
 
-## Windows (sem trabalho manual)
+## Windows (mais fácil)
 
-Use estes arquivos `.bat` na raiz do projeto:
-
-1. **Instalar dependências**
+1. Instalar dependências:
    ```bat
    install_deps.bat
    ```
-2. **Iniciar o site** (backend + frontend em janelas separadas)
+2. Gerar build do frontend:
+   ```bat
+   build_frontend.bat
+   ```
+3. Iniciar tudo em URL única:
    ```bat
    start_site.bat
    ```
-3. **Tudo em um comando**
-   ```bat
-   run_site.bat
-   ```
 
-### O que foi corrigido
+Ou use tudo em sequência:
 
-- O instalador agora usa `python -m pip` (mais estável no Windows).
-- O script de instalação não fecha sem mostrar mensagem final (`pause`).
-- O start abre backend e frontend em janelas separadas com `cmd /k`, então se der erro a janela fica aberta para você ver.
+```bat
+run_site.bat
+```
 
 ## Linux/macOS
 
-### Instalar dependências
+1. Instalar dependências:
+   ```bash
+   ./scripts/install_deps.sh
+   ```
+2. Build do frontend:
+   ```bash
+   ./scripts/build_frontend.sh
+   ```
+3. Iniciar backend (serve /app na mesma origem):
+   ```bash
+   ./scripts/start.sh
+   ```
 
-```bash
-./scripts/install_deps.sh
-```
+## Notas
 
-### Iniciar backend
-
-```bash
-./scripts/start.sh
-```
-
-### Iniciar frontend
-
-```bash
-./scripts/start_frontend.sh
-```
-
-## Endereços
-
-- Backend: `http://127.0.0.1:5000`
-- Frontend: `http://127.0.0.1:5173`
+- Se `http://127.0.0.1:5000/app` mostrar aviso de build, rode o build do frontend primeiro.
+- Em produção, mantenha a mesma estratégia: Flask servindo o `frontend/dist`.
 
 ## Admin padrão
 

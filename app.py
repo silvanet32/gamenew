@@ -16,11 +16,13 @@ from flask import (
     request,
     session,
     url_for,
+    send_from_directory,
 )
 from werkzeug.security import check_password_hash, generate_password_hash
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 DB_PATH = os.path.join(BASE_DIR, "database.db")
+FRONTEND_DIST_DIR = os.path.join(BASE_DIR, "frontend", "dist")
 
 
 def create_app() -> Flask:
@@ -504,6 +506,22 @@ def create_app() -> Flask:
         if not s:
             return jsonify({"error": "Série não encontrada."}), 404
         return jsonify(dict(s))
+
+
+
+    @app.get("/app")
+    @app.get("/app/<path:asset_path>")
+    def frontend_app(asset_path: str = ""):
+        if not os.path.isdir(FRONTEND_DIST_DIR):
+            flash("Frontend ainda não foi compilado. Execute: npm run build (na pasta frontend).", "warning")
+            return redirect(url_for("home") if session.get("user_id") else url_for("auth"))
+
+        if asset_path:
+            candidate = os.path.join(FRONTEND_DIST_DIR, asset_path)
+            if os.path.isfile(candidate):
+                return send_from_directory(FRONTEND_DIST_DIR, asset_path)
+
+        return send_from_directory(FRONTEND_DIST_DIR, "index.html")
 
     @app.errorhandler(403)
     def forbidden(_):
