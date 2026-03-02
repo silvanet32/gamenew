@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}Autenticação | GameNew{% endblock %}
+{% block content %}
+<section class="auth-cinematic-grid">
+  <article class="auth-cinematic-card">
+    <div class="auth-cinematic-hero">
+      <h2>MINI SÉRIES</h2>
+      <p>Entrar na sua conta</p>
+    </div>
+    <form class="form auth-form" method="post">
+      <input type="hidden" name="action" value="login">
+      <input type="email" name="email" placeholder="E-mail" required>
+      <input type="password" name="password" placeholder="Senha" required>
+      <button type="submit" class="btn-red">Entrar</button>
+      <p class="muted">Não tem conta? <button type="button" class="link-btn" data-target="register">Registrar</button></p>
+      <p class="muted">Admin padrão: admin@gmail.com / admin123</p>
+    </form>
+  </article>
+
+  <article class="auth-cinematic-card" id="registerBox">
+    <div class="auth-cinematic-hero">
+      <h2>MINI SÉRIES</h2>
+      <p>Criar sua conta</p>
+    </div>
+    <form class="form auth-form" method="post">
+      <input type="hidden" name="action" value="register">
+      <input type="text" name="username" placeholder="Usuário" required>
+      <input type="email" name="email" placeholder="E-mail" required>
+      <input type="password" name="password" placeholder="Senha" required>
+      <button type="submit" class="btn-red">Cadastrar</button>
+      <p class="muted">Já tem conta? <button type="button" class="link-btn" data-target="login">Fazer login</button></p>
+    </form>
+  </article>
+</section>
+
+<script>
+(() => {
+  const registerBox = document.getElementById('registerBox');
+  document.querySelectorAll('.link-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      if (btn.dataset.target === 'register') {
+        registerBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+  });
+})();
+</script>
+{% endblock %}

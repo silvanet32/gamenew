@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block title %}Início | GameNew{% endblock %}
+{% block content %}
+<section class="hero-banner">
+  <div class="hero-overlay">
+    <p class="hero-kicker">MINI SÉRIES</p>
+    <h2>Histórias curtas, grandes emoções</h2>
+    <p>Explore, adicione e organize suas séries em um visual estilo streaming.</p>
+  </div>
+</section>
+
+<section class="section-title-row">
+  <h3>Séries em destaque</h3>
+  <a href="{{ url_for('home') }}">Ver tudo</a>
+</section>
+<section class="carousel-track">
+{% for s in series %}
+  <article class="poster-card">
+    {% if s.cover_url %}
+      <img src="{{ s.cover_url }}" class="cover" alt="{{ s.title }}">
+    {% else %}
+      <div class="cover cover-fallback">{{ s.title[:1] }}</div>
+    {% endif %}
+    <div class="poster-caption">
+      <h4>{{ s.title }}</h4>
+      <small>👁 {{ s.views }} visualizações</small>
+    </div>
+    <a class="poster-link" href="{{ url_for('serie_detail', series_id=s.id) }}">Abrir</a>
+  </article>
+{% else %}
+  <p class="muted">Nenhuma série cadastrada ainda.</p>
+{% endfor %}
+</section>
+
+<section class="section-title-row">
+  <h3>Gêneros populares</h3>
+</section>
+<section class="carousel-track compact">
+  <span class="genre-chip">Ficção científica</span>
+  <span class="genre-chip">Suspense</span>
+  <span class="genre-chip">Fantasia</span>
+  <span class="genre-chip">Drama</span>
+</section>
+
+<section class="section-title-row">
+  <h3>Recomendado para você</h3>
+  <a href="{{ url_for('home') }}">Ver mais</a>
+</section>
+<section class="carousel-track">
+{% for s in series %}
+  <article class="poster-card">
+    {% if s.cover_url %}
+      <img src="{{ s.cover_url }}" class="cover" alt="{{ s.title }}">
+    {% else %}
+      <div class="cover cover-fallback">{{ s.title[:1] }}</div>
+    {% endif %}
+    <div class="poster-caption">
+      <h4>{{ s.title }}</h4>
+    </div>
+    <a class="poster-link" href="{{ url_for('serie_detail', series_id=s.id) }}">Abrir</a>
+  </article>
+{% else %}
+  <p class="muted">Adicione séries para preencher esta seção.</p>
+{% endfor %}
+</section>
+
+<section class="section-title-row">
+  <h3>Métodos de doação</h3>
+</section>
+<section class="carousel-track compact">
+  {% if donation_methods %}
+    {% for d in donation_methods %}
+      <article class="card donation-item">
+        <h4>{{ d.name }}</h4>
+        <p>{{ d.payment_key }}</p>
+      </article>
+    {% endfor %}
+  {% else %}
+    <p class="muted">Nenhum método ativo.</p>
+  {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}{{ s.title }} | GameNew{% endblock %}
+{% block content %}
+<section class="card">
+  <h2>{{ s.title }}</h2>
+  {% if s.cover_url %}<img src="{{ s.cover_url }}" class="cover detail" alt="{{ s.title }}">{% endif %}
+  <p>{{ s.description }}</p>
+  {% if s.external_link %}<p><a href="{{ s.external_link }}" target="_blank">🔗 Link externo</a></p>{% endif %}
+  {% if s.video_url %}<p><a href="{{ url_for('watch_internal', series_id=s.id) }}">▶ Assistir no player interno</a></p><p class="muted">O player bloqueia opções diretas de download.</p>{% endif %}
+  <p class="muted">Visualizações: {{ s.views }}</p>
+
+  <form method="post" action="{{ url_for('toggle_like', series_id=s.id) }}">
+    <button type="submit">❤ Curtir/Descurtir ({{ like_count }})</button>
+  </form>
+</section>
+
+<section class="card">
+  <h3>Comentários</h3>
+  <form method="post" action="{{ url_for('add_comment', series_id=s.id) }}" class="form">
+    <textarea name="comment" maxlength="500" rows="4" placeholder="Digite seu comentário..."></textarea>
+    <button type="submit">Publicar</button>
+  </form>
+
+  <div class="comments">
+    {% for c in comments %}
+      <article class="comment">
+        <strong>{{ c.username }}</strong>
+        <small class="muted">{{ c.created_at }}</small>
+        <p>{{ c.comment }}</p>
+      </article>
+    {% else %}
+      <p class="muted">Nenhum comentário ainda.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

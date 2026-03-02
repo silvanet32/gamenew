@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Estatísticas{% endblock %}
+{% block content %}
+<section class="grid three">
+  <article class="card"><h3>Usuários</h3><p>{{ stats.users }}</p></article>
+  <article class="card"><h3>Séries</h3><p>{{ stats.series }}</p></article>
+  <article class="card"><h3>Views</h3><p>{{ stats.views }}</p></article>
+  <article class="card"><h3>Likes</h3><p>{{ stats.likes }}</p></article>
+  <article class="card"><h3>Comentários</h3><p>{{ stats.comments }}</p></article>
+</section>
+{% endblock %}
